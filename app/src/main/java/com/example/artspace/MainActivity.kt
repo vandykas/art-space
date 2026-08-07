@@ -1,5 +1,6 @@
 package com.example.artspace
 
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -8,6 +9,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,6 +24,8 @@ import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material.icons.filled.ArrowCircleLeft
 import androidx.compose.material.icons.filled.ArrowCircleRight
 import androidx.compose.material.icons.filled.ArrowForwardIos
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -29,6 +33,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -79,7 +84,7 @@ fun ArtSpaceApp() {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            ArtWithControl()
+            ArtWithControl(modifier = Modifier.fillMaxWidth())
             Spacer(modifier = Modifier.height(48.dp))
             DescriptionCard()
         }
@@ -89,23 +94,46 @@ fun ArtSpaceApp() {
 @Composable
 fun ArtWithControl(modifier: Modifier = Modifier) {
     Row(
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceAround,
+        modifier = modifier
     ) {
-        Icon(
-            imageVector = Icons.Filled.ArrowBackIosNew,
-            contentDescription = null,
-            modifier = Modifier.size(48.dp).padding(horizontal = 4.dp)
-        )
+        Button(
+            onClick = {},
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.Transparent,
+                contentColor = Color.White
+            ),
+            contentPadding = PaddingValues(0.dp),
+            modifier = Modifier.size(36.dp)
+        ) {
+            Icon(
+                imageVector = Icons.Filled.ArrowBackIosNew,
+                contentDescription = null,
+                modifier = Modifier.size(20.dp)
+            )
+        }
         Image(
             painter = painterResource(R.drawable.petra_jordan),
             contentDescription = stringResource(R.string.petra),
             modifier = Modifier.width(280.dp)
         )
-        Icon(
-            imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,
-            contentDescription = null,
-            modifier = Modifier.size(48.dp).padding(horizontal = 4.dp)
-        )
+        Button(
+            onClick = {},
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.Transparent,
+                contentColor = Color.White
+            ),
+            contentPadding = PaddingValues(0.dp),
+            modifier = Modifier.size(36.dp)
+        ) {
+            Icon(
+                imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,
+                contentDescription = null,
+                modifier = Modifier.size(20.dp)
+            )
+
+        }
     }
 }
 
@@ -126,7 +154,10 @@ fun DescriptionCard(modifier: Modifier = Modifier) {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(
+    showBackground = true,
+    uiMode = Configuration.UI_MODE_NIGHT_YES
+)
 @Composable
 fun ArtSpaceAppPreview() {
     ArtSpaceTheme {
