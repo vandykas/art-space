@@ -79,25 +79,7 @@ fun ArtSpaceApp() {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.ArrowBackIosNew,
-                    contentDescription = null,
-                    modifier = Modifier.size(48.dp).padding(horizontal = 4.dp)
-                )
-                Image(
-                    painter = painterResource(R.drawable.petra_jordan),
-                    contentDescription = stringResource(R.string.petra),
-                    modifier = Modifier.width(280.dp)
-                )
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,
-                    contentDescription = null,
-                    modifier = Modifier.size(48.dp).padding(horizontal = 4.dp)
-                )
-            }
+            ArtWithControl()
             Spacer(modifier = Modifier.height(48.dp))
             DescriptionCard()
         }
@@ -105,7 +87,30 @@ fun ArtSpaceApp() {
 }
 
 @Composable
-fun DescriptionCard() {
+fun ArtWithControl(modifier: Modifier = Modifier) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Icon(
+            imageVector = Icons.Filled.ArrowBackIosNew,
+            contentDescription = null,
+            modifier = Modifier.size(48.dp).padding(horizontal = 4.dp)
+        )
+        Image(
+            painter = painterResource(R.drawable.petra_jordan),
+            contentDescription = stringResource(R.string.petra),
+            modifier = Modifier.width(280.dp)
+        )
+        Icon(
+            imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,
+            contentDescription = null,
+            modifier = Modifier.size(48.dp).padding(horizontal = 4.dp)
+        )
+    }
+}
+
+@Composable
+fun DescriptionCard(modifier: Modifier = Modifier) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
