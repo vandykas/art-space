@@ -130,8 +130,27 @@ fun DescriptionCard(modifier: Modifier = Modifier) {
 @Composable
 fun ArtSpaceAppPreview() {
     ArtSpaceTheme {
-        Surface(modifier = Modifier.fillMaxSize()) {
-            ArtSpaceApp()
+        ArtSpaceTheme {
+            Scaffold(
+                topBar = {
+                    Box(
+                        contentAlignment = Alignment.Center,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(120.dp)
+                    ) {
+                        Text(
+                            text = "Art Space",
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                }
+            ) { innerPadding ->
+                Surface(modifier = Modifier.fillMaxSize().padding(innerPadding)) {
+                    ArtSpaceApp()
+                }
+            }
         }
     }
 }
