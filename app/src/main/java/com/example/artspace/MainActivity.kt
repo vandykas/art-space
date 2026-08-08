@@ -138,7 +138,7 @@ fun ArtSpaceApp() {
                 },
                 modifier = Modifier.fillMaxWidth()
             )
-            Spacer(modifier = Modifier.height(48.dp))
+            Spacer(modifier = Modifier.height(40.dp))
             DescriptionCard(
                 description = artCollection[currentIndex].description,
                 additionalInformation = artCollection[currentIndex].additionalInformation
@@ -177,7 +177,7 @@ fun ArtWithControl(
         Image(
             painter = painterResource(art),
             contentDescription = stringResource(R.string.petra),
-            modifier = Modifier.width(280.dp)
+            modifier = Modifier.width(280.dp).height(500.dp)
         )
         Button(
             onClick = nextAction,
