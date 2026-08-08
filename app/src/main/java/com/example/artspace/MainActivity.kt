@@ -5,6 +5,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -21,9 +23,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForwardIos
 import androidx.compose.material.icons.filled.ArrowBackIosNew
-import androidx.compose.material.icons.filled.ArrowCircleLeft
-import androidx.compose.material.icons.filled.ArrowCircleRight
-import androidx.compose.material.icons.filled.ArrowForwardIos
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -31,10 +30,13 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -77,6 +79,46 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun ArtSpaceApp() {
+    val artCollection = listOf(
+        Art(
+            R.drawable.petra_jordan,
+            R.string.petra,
+            R.string.jordan
+        ),
+        Art(
+            R.drawable.petra_jordan,
+            R.string.petra,
+            R.string.jordan
+        ),
+        Art(
+            R.drawable.coloseum_italy,
+            R.string.coloseum,
+            R.string.italy
+        ),
+        Art(
+            R.drawable.taj_mahal_india,
+            R.string.taj_mahal,
+            R.string.india
+        ),
+        Art(
+            R.drawable.machu_picchu_peru,
+            R.string.machu_picchu,
+            R.string.peru
+        ),
+        Art(
+            R.drawable.chichen_itza_mexico,
+            R.string.chichen_itza,
+            R.string.mexico
+        ),
+        Art(
+            R.drawable.great_wall_of_china,
+            R.string.great_wall_of_china,
+            R.string.china
+        ),
+    )
+
+    var currentIndex by remember { mutableStateOf(0) }
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
@@ -84,22 +126,41 @@ fun ArtSpaceApp() {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            ArtWithControl(modifier = Modifier.fillMaxWidth())
+            ArtWithControl(
+                art = artCollection[currentIndex].art,
+                previousAction = {
+                    val collectionSize = artCollection.size
+                    currentIndex = (currentIndex - 1 + collectionSize) % collectionSize
+                },
+                nextAction = {
+                    val collectionSize = artCollection.size
+                    currentIndex = (currentIndex + 1) % collectionSize
+                },
+                modifier = Modifier.fillMaxWidth()
+            )
             Spacer(modifier = Modifier.height(48.dp))
-            DescriptionCard()
+            DescriptionCard(
+                description = artCollection[currentIndex].description,
+                additionalInformation = artCollection[currentIndex].additionalInformation
+            )
         }
     }
 }
 
 @Composable
-fun ArtWithControl(modifier: Modifier = Modifier) {
+fun ArtWithControl(
+    @DrawableRes art: Int,
+    previousAction: () -> Unit,
+    nextAction: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceAround,
         modifier = modifier
     ) {
         Button(
-            onClick = {},
+            onClick = previousAction,
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color.Transparent,
                 contentColor = Color.White
@@ -114,12 +175,12 @@ fun ArtWithControl(modifier: Modifier = Modifier) {
             )
         }
         Image(
-            painter = painterResource(R.drawable.petra_jordan),
+            painter = painterResource(art),
             contentDescription = stringResource(R.string.petra),
             modifier = Modifier.width(280.dp)
         )
         Button(
-            onClick = {},
+            onClick = nextAction,
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color.Transparent,
                 contentColor = Color.White
@@ -138,17 +199,21 @@ fun ArtWithControl(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun DescriptionCard(modifier: Modifier = Modifier) {
+fun DescriptionCard(
+    @StringRes description: Int,
+    @StringRes additionalInformation: Int,
+    modifier: Modifier = Modifier
+) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Description",
+            text = stringResource(description),
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center
         )
         Text(
-            text = "Photographer",
+            text = stringResource(additionalInformation),
             textAlign = TextAlign.Center
         )
     }
