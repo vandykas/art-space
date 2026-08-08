@@ -86,9 +86,9 @@ fun ArtSpaceApp() {
             R.string.jordan
         ),
         Art(
-            R.drawable.petra_jordan,
-            R.string.petra,
-            R.string.jordan
+            R.drawable.christ_the_redeemer_brazil,
+            R.string.christ_the_redeemer,
+            R.string.brazil
         ),
         Art(
             R.drawable.coloseum_italy,
