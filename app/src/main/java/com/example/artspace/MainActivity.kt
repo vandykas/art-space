@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForwardIos
@@ -53,20 +54,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             ArtSpaceTheme {
                 Scaffold(
-                    topBar = {
-                        Box(
-                            contentAlignment = Alignment.Center,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(120.dp)
-                        ) {
-                            Text(
-                                text = "Art Space",
-                                fontSize = 16.sp,
-                                fontWeight = FontWeight.Bold
-                            )
-                        }
-                    }
+                    topBar = { TopBar() }
                 ) { innerPadding ->
                     Surface(modifier = Modifier.fillMaxSize().padding(innerPadding)) {
                         ArtSpaceApp()
@@ -74,6 +62,23 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+}
+
+@Composable
+fun TopBar() {
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = Modifier
+            .statusBarsPadding()
+            .fillMaxWidth()
+            .height(40.dp)
+    ) {
+        Text(
+            text = "Art Space",
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Bold
+        )
     }
 }
 
