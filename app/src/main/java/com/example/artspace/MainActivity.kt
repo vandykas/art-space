@@ -8,6 +8,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.gestures.detectDragGestures
+import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -40,6 +42,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -162,10 +165,27 @@ fun ArtWithControl(
     nextAction: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    var offsetX = 0.0
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceAround,
-        modifier = modifier
+        modifier = modifier.pointerInput(Unit) {
+            detectHorizontalDragGestures(
+                onHorizontalDrag = { change, dragAmount ->
+                    change.consume()
+                    offsetX += dragAmount
+                },
+                onDragEnd = {
+                    if (offsetX >= 100f) {
+                        previousAction()
+                    }
+                    else if (offsetX <= -100f) {
+                        nextAction()
+                    }
+                    offsetX = 0.0
+                }
+            )
+        }
     ) {
         Button(
             onClick = previousAction,
